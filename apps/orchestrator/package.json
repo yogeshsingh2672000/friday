@@ -1,0 +1,37 @@
+{
+  "name": "@friday/orchestrator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "dev": "tsx watch --clear-screen=false src/index.ts",
+    "start": "node --enable-source-maps dist/index.js",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "test": "vitest run",
+    "clean": "rimraf dist .turbo *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "0.60.0",
+    "@friday/shared": "workspace:*",
+    "@friday/audio": "workspace:*",
+    "@friday/stt": "workspace:*",
+    "@friday/llm": "workspace:*",
+    "@friday/tts": "workspace:*",
+    "@friday/memory": "workspace:*",
+    "@friday/tools": "workspace:*",
+    "dotenv": "16.4.5",
+    "nanoid": "5.0.7",
+    "ws": "8.18.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "@types/ws": "8.5.11",
+    "rimraf": "5.0.9",
+    "tsx": "4.16.2",
+    "typescript": "5.5.4",
+    "vitest": "2.0.3"
+  }
+}

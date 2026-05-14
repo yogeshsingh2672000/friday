@@ -1,0 +1,51 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env", ".env.example"],
+  "globalEnv": [
+    "NODE_ENV",
+    "AWS_ACCESS_KEY_ID",
+    "AWS_SECRET_ACCESS_KEY",
+    "AWS_REGION",
+    "AWS_SESSION_TOKEN",
+    "BEDROCK_MODEL_ID",
+    "BEDROCK_EMBEDDING_MODEL_ID",
+    "FRIDAY_MAX_TOKENS",
+    "DEEPGRAM_API_KEY",
+    "DEEPGRAM_MODEL",
+    "DEEPGRAM_LANGUAGE",
+    "ELEVENLABS_API_KEY",
+    "ELEVENLABS_VOICE_ID",
+    "ELEVENLABS_MODEL",
+    "PICOVOICE_ACCESS_KEY",
+    "PORCUPINE_KEYWORD",
+    "DATABASE_URL",
+    "PGVECTOR_DIM",
+    "ORCHESTRATOR_HOST",
+    "ORCHESTRATOR_PORT",
+    "LOG_LEVEL"
+  ],
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**", ".next/**", "build/**", "out/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "lint": {
+      "outputs": []
+    },
+    "typecheck": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": ["coverage/**"]
+    },
+    "clean": {
+      "cache": false
+    }
+  }
+}

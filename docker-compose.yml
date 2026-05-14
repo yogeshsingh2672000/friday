@@ -1,0 +1,21 @@
+services:
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: friday-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: friday
+      POSTGRES_PASSWORD: friday
+      POSTGRES_DB: friday
+    ports:
+      - "5432:5432"
+    volumes:
+      - friday_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U friday -d friday"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+
+volumes:
+  friday_pgdata:

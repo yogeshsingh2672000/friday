@@ -1,0 +1,169 @@
+# =========================================================================
+# PROJECT FRIDAY — .gitignore
+# Keep secrets out of git. Only files marked with `*.example` are templates
+# meant to be committed.
+# =========================================================================
+
+# ────────────────────────────────────────────────────────────────────────
+# Secrets & credentials — NEVER commit these.
+# ────────────────────────────────────────────────────────────────────────
+# Every variation of dotenv files at any depth.
+.env
+.env.*
+*.env
+*.env.*
+
+# Allow the templates (the only env-like files that should land in git).
+!.env.example
+!*.env.example
+!apps/*/.env.example
+!packages/*/.env.example
+
+# Cloud provider credentials
+.aws/
+.gcloud/
+.azure/
+credentials
+credentials.*
+aws-credentials*
+gcp-key*.json
+service-account*.json
+google-credentials*.json
+azure-credentials*
+
+# Private keys & certificates
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*.cer
+*.der
+*.asc
+*.gpg
+id_rsa
+id_dsa
+id_ed25519
+id_ecdsa
+known_hosts
+
+# Generic secrets directories
+secrets/
+.secrets/
+private/
+
+# ────────────────────────────────────────────────────────────────────────
+# Node / package managers
+# ────────────────────────────────────────────────────────────────────────
+node_modules/
+.pnpm-store/
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+yarn-error.log
+npm-debug.log*
+.npm/
+.yarn/
+
+# Keep pnpm-lock.yaml — it's the deterministic lock file for this repo.
+!pnpm-lock.yaml
+
+# ────────────────────────────────────────────────────────────────────────
+# Build outputs
+# ────────────────────────────────────────────────────────────────────────
+dist/
+build/
+out/
+.next/
+.nuxt/
+.turbo/
+.vite/
+*.tsbuildinfo
+
+# tsx caches (mingw on Windows doesn't set TMPDIR, so tsx scribbles under
+# the package working dir into ./undefined/temp/tsx-...)
+**/undefined/
+**/tsx-cache/
+.tsx-cache/
+
+# ────────────────────────────────────────────────────────────────────────
+# Tests / coverage
+# ────────────────────────────────────────────────────────────────────────
+coverage/
+.nyc_output/
+.vitest/
+
+# ────────────────────────────────────────────────────────────────────────
+# Logs
+# ────────────────────────────────────────────────────────────────────────
+*.log
+logs/
+pino-*.log
+orchestrator.log
+
+# ────────────────────────────────────────────────────────────────────────
+# OS-generated junk
+# ────────────────────────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+Thumbs.db:encryptable
+Desktop.ini
+$RECYCLE.BIN/
+ehthumbs.db
+ehthumbs_vista.db
+
+# ────────────────────────────────────────────────────────────────────────
+# IDE / editor metadata
+# ────────────────────────────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.shared.json
+.idea/
+*.iml
+*.swp
+*.swo
+*.sublime-workspace
+*.sublime-project
+.history/
+.vs/
+.fleet/
+
+# ────────────────────────────────────────────────────────────────────────
+# Local data / databases
+# ────────────────────────────────────────────────────────────────────────
+.data/
+.cache/
+*.sqlite
+*.sqlite3
+*.db
+postgres-data/
+pgdata/
+
+# ────────────────────────────────────────────────────────────────────────
+# Wake-word model (downloaded by setup script from a public URL)
+# ────────────────────────────────────────────────────────────────────────
+apps/renderer/public/porcupine_params*.pv
+
+# ────────────────────────────────────────────────────────────────────────
+# Captured audio / test recordings
+# ────────────────────────────────────────────────────────────────────────
+*.wav
+*.mp3
+*.ogg
+*.flac
+*.opus
+recordings/
+
+# ────────────────────────────────────────────────────────────────────────
+# Misc
+# ────────────────────────────────────────────────────────────────────────
+.tmp/
+tmp/
+*.bak
+*.orig
+*.rej
+.local/
+release/

@@ -1,0 +1,30 @@
+{
+  "name": "@friday/memory",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "migrate": "tsx src/migrate.ts",
+    "clean": "rimraf dist .turbo *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@friday/shared": "workspace:*",
+    "@anthropic-ai/bedrock-sdk": "0.29.1",
+    "@aws-sdk/client-bedrock-runtime": "3.654.0",
+    "dotenv": "16.4.5",
+    "pg": "8.12.0",
+    "pgvector": "0.2.0",
+    "nanoid": "5.0.7"
+  },
+  "devDependencies": {
+    "@types/pg": "8.11.6",
+    "tsx": "4.16.2",
+    "rimraf": "5.0.9",
+    "typescript": "5.5.4"
+  }
+}

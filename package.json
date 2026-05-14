@@ -1,0 +1,36 @@
+{
+  "name": "friday",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Project Friday — realtime cinematic AI assistant",
+  "packageManager": "pnpm@9.7.0",
+  "engines": {
+    "node": ">=20.11.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "build": "turbo run build",
+    "dev": "turbo run dev --parallel --concurrency=20",
+    "dev:orchestrator": "pnpm --filter @friday/orchestrator dev",
+    "dev:renderer": "pnpm --filter @friday/renderer dev",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "test": "turbo run test",
+    "clean": "turbo run clean && rimraf node_modules .turbo",
+    "migrate": "pnpm --filter @friday/memory migrate",
+    "db:up": "docker compose up -d postgres",
+    "db:down": "docker compose down",
+    "setup": "pnpm install && pnpm db:up && pnpm migrate && echo \"Setup complete. Copy .env.example -> .env and fill keys, then run: pnpm dev\""
+  },
+  "devDependencies": {
+    "@types/node": "20.14.10",
+    "rimraf": "5.0.9",
+    "turbo": "2.0.6",
+    "typescript": "5.5.4",
+    "tsx": "4.16.2",
+    "prettier": "3.3.3",
+    "eslint": "9.7.0",
+    "@typescript-eslint/eslint-plugin": "8.0.0",
+    "@typescript-eslint/parser": "8.0.0"
+  }
+}

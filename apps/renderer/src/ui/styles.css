@@ -1,0 +1,274 @@
+@font-face {
+  font-family: 'Friday';
+  src: local('Inter'), local('Segoe UI Variable'), local('Segoe UI'), local('Roboto'), local('sans-serif');
+}
+
+/* ---------- Lightweight CSS backdrop (replaces the Three.js scene) -------- */
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at 50% 45%, rgba(20, 40, 70, 0.55) 0%, rgba(4, 8, 16, 0.95) 55%, #000 100%),
+    #000;
+  overflow: hidden;
+}
+
+.backdrop-stars {
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(1px 1px at 12% 18%, rgba(180, 220, 255, 0.65), transparent 60%),
+    radial-gradient(1px 1px at 27% 73%, rgba(180, 220, 255, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 41% 31%, rgba(180, 220, 255, 0.7), transparent 60%),
+    radial-gradient(1px 1px at 58% 82%, rgba(180, 220, 255, 0.45), transparent 60%),
+    radial-gradient(1px 1px at 70% 12%, rgba(180, 220, 255, 0.6), transparent 60%),
+    radial-gradient(1px 1px at 82% 47%, rgba(180, 220, 255, 0.55), transparent 60%),
+    radial-gradient(1.5px 1.5px at 92% 24%, rgba(255, 255, 255, 0.8), transparent 60%),
+    radial-gradient(1px 1px at 8% 88%, rgba(180, 220, 255, 0.5), transparent 60%),
+    radial-gradient(1px 1px at 22% 5%, rgba(180, 220, 255, 0.55), transparent 60%);
+  opacity: 0.55;
+}
+
+.backdrop-orb {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  transition: transform 120ms cubic-bezier(0.2, 0.7, 0.2, 1),
+              box-shadow 180ms ease-out,
+              background 600ms ease-out;
+  animation: orb-breathe 5.5s ease-in-out infinite;
+  will-change: transform, box-shadow;
+}
+
+@keyframes orb-breathe {
+  0%, 100% { filter: brightness(0.92); }
+  50%      { filter: brightness(1.08); }
+}
+
+.backdrop-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 280px;
+  height: 280px;
+  border-radius: 50%;
+  border: 1px solid;
+  transition: opacity 240ms ease-out, border-color 600ms ease-out;
+}
+
+.backdrop-orb.phase-listening    { animation-duration: 3s; }
+.backdrop-orb.phase-thinking     { animation-duration: 2s; }
+.backdrop-orb.phase-tool_calling { animation-duration: 1.5s; }
+.backdrop-orb.phase-speaking     { animation-duration: 1.2s; }
+.backdrop-orb.phase-error        { animation-duration: 0.7s; }
+
+.hud {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  font-family: 'Friday', sans-serif;
+  color: #cfe9ff;
+}
+
+.hud .pane {
+  position: absolute;
+  pointer-events: auto;
+  background: linear-gradient(180deg, rgba(8, 18, 36, 0.82), rgba(8, 18, 36, 0.65));
+  border: 1px solid rgba(109, 240, 255, 0.28);
+  border-radius: 10px;
+  /* backdrop-filter is GPU-heavy on iGPUs — opt-in via .pane.glass instead. */
+  padding: 14px 18px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+}
+
+.hud .pane.glass {
+  background: linear-gradient(180deg, rgba(8, 18, 36, 0.45), rgba(8, 18, 36, 0.15));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hud .pane h3 {
+  margin: 0 0 8px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(109, 240, 255, 0.7);
+}
+
+.status {
+  top: 28px;
+  left: 28px;
+  min-width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.status .row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+.status .dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #999;
+  box-shadow: 0 0 10px currentColor;
+}
+.status .dot.connected { background: #6df0ff; color: #6df0ff; }
+.status .dot.disconnected { background: #ff5050; color: #ff5050; }
+
+.phase-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(109, 240, 255, 0.08);
+  border: 1px solid rgba(109, 240, 255, 0.35);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+.phase-pill.idle      { background: rgba(120, 140, 160, 0.08); border-color: rgba(120, 140, 160, 0.4); color: #9ab; }
+.phase-pill.listening { background: rgba(109, 240, 255, 0.12); border-color: rgba(109, 240, 255, 0.6); color: #6df0ff; }
+.phase-pill.transcribing { background: rgba(109, 240, 255, 0.14); border-color: rgba(109, 240, 255, 0.7); color: #aef; }
+.phase-pill.thinking  { background: rgba(255, 170, 80, 0.12); border-color: rgba(255, 170, 80, 0.6); color: #ffb070; }
+.phase-pill.tool_calling { background: rgba(180, 120, 255, 0.14); border-color: rgba(180, 120, 255, 0.7); color: #c9a0ff; }
+.phase-pill.speaking  { background: rgba(255, 122, 61, 0.14); border-color: rgba(255, 122, 61, 0.7); color: #ff9966; }
+.phase-pill.interrupted { background: rgba(255, 220, 80, 0.12); border-color: rgba(255, 220, 80, 0.7); color: #ffe080; }
+.phase-pill.error     { background: rgba(255, 60, 60, 0.14); border-color: rgba(255, 60, 60, 0.7); color: #ff8080; }
+
+.transcript {
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(880px, 80vw);
+  text-align: center;
+  font-size: 22px;
+  line-height: 1.5;
+  padding: 22px 32px;
+}
+.transcript .user { color: #aef; opacity: 0.95; }
+.transcript .partial { color: #aef; opacity: 0.55; font-style: italic; }
+.transcript .assistant { color: #ffb070; }
+
+.tool-feed {
+  top: 28px;
+  right: 28px;
+  width: 320px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.tool-feed .tool {
+  padding: 8px 0;
+  border-bottom: 1px dashed rgba(109, 240, 255, 0.12);
+  font-size: 12px;
+}
+.tool-feed .tool:last-child { border-bottom: none; }
+.tool-feed .name { font-weight: 700; color: #6df0ff; letter-spacing: 0.5px; }
+.tool-feed .status { font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; padding: 1px 6px; border-radius: 4px; }
+.tool-feed .status.pending { background: rgba(180, 120, 255, 0.2); color: #c9a0ff; }
+.tool-feed .status.running { background: rgba(255, 170, 80, 0.2); color: #ffb070; }
+.tool-feed .status.success { background: rgba(80, 220, 140, 0.2); color: #70e0a0; }
+.tool-feed .status.error   { background: rgba(255, 80, 80, 0.2); color: #ff8888; }
+.tool-feed .preview { color: #8ab; font-family: 'JetBrains Mono', 'Consolas', monospace; font-size: 11px; word-break: break-word; opacity: 0.7; margin-top: 4px; }
+
+.cards {
+  bottom: 32px;
+  right: 28px;
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 70vh;
+  overflow-y: auto;
+}
+.cards .card {
+  padding: 14px 16px;
+  font-size: 13px;
+  line-height: 1.4;
+  position: relative;
+}
+.cards .card h4 {
+  margin: 0 0 6px;
+  font-size: 13px;
+  color: #6df0ff;
+  letter-spacing: 0.5px;
+}
+.cards .card p { margin: 0; opacity: 0.9; }
+.cards .card.warn { border-color: rgba(255, 170, 80, 0.5); }
+.cards .card.warn h4 { color: #ffb070; }
+.cards .card.success { border-color: rgba(80, 220, 140, 0.5); }
+.cards .card.success h4 { color: #70e0a0; }
+.cards .card.error { border-color: rgba(255, 80, 80, 0.5); }
+.cards .card.error h4 { color: #ff8080; }
+.cards .card ul { margin: 4px 0 0 16px; padding: 0; }
+.cards .card img { width: 100%; border-radius: 6px; margin-top: 6px; }
+
+.controls {
+  bottom: 28px;
+  left: 28px;
+  display: flex;
+  gap: 8px;
+}
+.controls button {
+  pointer-events: auto;
+  padding: 8px 14px;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  background: rgba(8, 18, 36, 0.6);
+  color: #cfe9ff;
+  border: 1px solid rgba(109, 240, 255, 0.35);
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: inherit;
+  transition: background 120ms ease, border-color 120ms ease;
+}
+.controls button:hover { background: rgba(109, 240, 255, 0.12); border-color: rgba(109, 240, 255, 0.7); }
+.controls button.danger { border-color: rgba(255, 80, 80, 0.5); color: #ff8888; }
+.controls button.danger:hover { background: rgba(255, 80, 80, 0.12); }
+
+.level-meter {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: rgba(109, 240, 255, 0.7);
+}
+.level-meter .bar {
+  flex: 1;
+  height: 4px;
+  background: rgba(109, 240, 255, 0.1);
+  border-radius: 2px;
+  overflow: hidden;
+}
+.level-meter .fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6df0ff, #ff7a3d);
+  transition: width 80ms linear;
+}
+
+.error-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 60, 60, 0.85);
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 12px;
+  z-index: 100;
+  text-align: center;
+  pointer-events: auto;
+}

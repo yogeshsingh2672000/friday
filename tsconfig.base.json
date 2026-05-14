@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compilerOptions": {
+    "target": "ES2022",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "exactOptionalPropertyTypes": false,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "skipLibCheck": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "useDefineForClassFields": true,
+    "verbatimModuleSyntax": false,
+    "allowImportingTsExtensions": false,
+    "jsx": "react-jsx",
+    "types": ["node"],
+    "baseUrl": ".",
+    "paths": {
+      "@friday/shared": ["packages/shared/src/index.ts"],
+      "@friday/shared/*": ["packages/shared/src/*"],
+      "@friday/audio": ["packages/audio/src/index.ts"],
+      "@friday/stt": ["packages/stt/src/index.ts"],
+      "@friday/llm": ["packages/llm/src/index.ts"],
+      "@friday/tts": ["packages/tts/src/index.ts"],
+      "@friday/memory": ["packages/memory/src/index.ts"],
+      "@friday/tools": ["packages/tools/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "dist", "build", ".next", ".turbo"]
+}

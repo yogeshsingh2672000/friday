@@ -1,0 +1,24 @@
+{
+  "name": "@friday/llm",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "./src/index.ts",
+  "types": "./src/index.ts",
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint src",
+    "clean": "rimraf dist .turbo *.tsbuildinfo"
+  },
+  "dependencies": {
+    "@friday/shared": "workspace:*",
+    "@anthropic-ai/bedrock-sdk": "0.29.1",
+    "@anthropic-ai/sdk": "0.60.0",
+    "zod": "3.23.8"
+  },
+  "devDependencies": {
+    "rimraf": "5.0.9",
+    "typescript": "5.5.4"
+  }
+}
